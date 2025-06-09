@@ -14,7 +14,7 @@ function App() {
       <PrivyWalletContextProvider>
         <div
           className={
-            "w-screen flex flex-col items-center bg-gray-50/20 justify-center text-gray-900 font-semibold text-sm py-20 px-5 space-y-5"
+            "w-screen flex flex-col items-center bg-gray-50/20 justify-center text-gray-900 font-semibold text-sm space-y-5"
           }
         >
           <CreditPurchase />
