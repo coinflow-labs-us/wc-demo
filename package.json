@@ -13,6 +13,7 @@
     "@privy-io/react-auth": "^2.14.1",
     "@rollup/plugin-inject": "^5.0.5",
     "@solana/web3.js": "^1.98.2",
+    "bs58": "^6.0.0",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

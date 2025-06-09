@@ -2,6 +2,7 @@ import { usePrivyWallet } from "../hooks/usePrivyWallet.tsx";
 import { useEffect, useState } from "react";
 import { CreditPurchase } from "./CreditPurchase.tsx";
 import { ModeSelector } from "../components/ModeSelector.tsx";
+import { RedeemCredits } from "./RedeemCredits.tsx";
 
 export function Layout() {
   const [mode, setMode] = useState<"topUp" | "redeem">("topUp");
@@ -26,7 +27,7 @@ export function Layout() {
       </div>
       <div className={"hidden sm:block flex-grow h-full"} />
       {mode === "topUp" && <CreditPurchase />}
-      {mode === "redeem" && <CreditPurchase />}
+      {mode === "redeem" && <RedeemCredits />}
       <div
         style={{ backgroundColor: "#090A0C" }}
         className={"block sm:hidden flex-grow w-full"}
@@ -61,7 +62,7 @@ function HeaderSection({
           }
           alt="coinflow"
           className="size-4 lg:size-6"
-          containerClassName="size-7 lg:size-10 bg-gray-900 border-action"
+          containerClassName="size-7 lg:size-10 bg-[#a32b29] border-action"
         />
       </div>
       <ModeSelector mode={mode} setMode={setMode} />
