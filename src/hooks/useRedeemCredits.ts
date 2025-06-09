@@ -25,6 +25,7 @@ export function useRedeemCredits({ amount }: { amount: string }) {
       }),
     };
 
+    // Receive a transaction from Coinflow
     const tx: string = await fetch(
       "https://api-sandbox.coinflow.cash/api/redeem/merchant",
       options,
@@ -33,6 +34,7 @@ export function useRedeemCredits({ amount }: { amount: string }) {
       .then(({ transaction }) => transaction)
       .catch((err) => console.error(err));
 
+    // User wallet signs the transaction
     const signedTx = await wallet.signTransaction(
       VersionedTransaction.deserialize(base58.decode(tx)),
     );
@@ -50,6 +52,7 @@ export function useRedeemCredits({ amount }: { amount: string }) {
       }),
     };
 
+    // Send the transaction off to be processed
     await fetch(
       "https://api-sandbox.coinflow.cash/api/utils/send-coinflow-tx",
       options2,
@@ -60,6 +63,7 @@ export function useRedeemCredits({ amount }: { amount: string }) {
 
     console.log("SUCCESS!!");
 
+    // Wait for completion
     await new Promise((resolve) => setTimeout(resolve, 10_000));
   }, [amount]);
 
