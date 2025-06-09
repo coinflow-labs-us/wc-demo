@@ -1,0 +1,24 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "standard",
+    "prettier",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:react-hooks/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "prettier"],
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "ignorePatterns": ["build", "node_modules", "src/components/forms/purchase/payment-form/TokenEx.js"],
+  "rules": {
+    "camelcase": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "prefer-regex-literals": "off"
+  }
+}
