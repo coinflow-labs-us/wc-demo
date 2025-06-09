@@ -1,7 +1,7 @@
 import { usePrivyWallet } from "../hooks/usePrivyWallet.tsx";
 import { useCheckoutLink } from "../hooks/useCheckoutLink.ts";
 import { useHeight } from "../hooks/useHeight.ts";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AmountSelector } from "../components/AmountSelector.tsx";
 
 export function CreditPurchase() {
@@ -11,129 +11,24 @@ export function CreditPurchase() {
   const { wallet } = usePrivyWallet();
   const { url } = useCheckoutLink({ amount });
 
-  if (!wallet.publicKey) return <Login />;
+  if (!wallet.publicKey) return null;
 
   return (
-    <div
-      style={{ backgroundColor: "#F8F9FA" }}
-      className={
-        "flex flex-col overflow-y-scroll sm:flex-row sm:h-screen overflow-auto w-full"
-      }
-    >
+    <div className={"w-full sm:w-3/4 md:w-1/2 pr-0 lg:pr-[12%] pt-12"}>
+      <AmountSelector amount={amount} setAmount={setAmount} />
       <div
-        style={{ backgroundColor: "#F8F9FA" }}
+        style={{ height: `${height}px` }}
         className={
-          "flex-grow sm:h-full fixed top-0 left-0 w-full sm:w-1/4 md:w-1/2"
+          "w-full sm:px-[2%] lg:px-[5%] mt-20 sm:mt-10 sm:mb-10 overflow-auto sm:pt-0"
         }
       >
-        <SideBar />
-      </div>
-      <div className={"hidden sm:block flex-grow h-full"} />
-      <div className={"w-full sm:w-3/4 md:w-1/2 pr-0 lg:pr-[12%] pt-12"}>
-        <AmountSelector amount={amount} setAmount={setAmount} />
         <div
-          style={{ height: `${height}px` }}
           className={
-            "w-full sm:px-[2%] lg:px-[5%] mt-20 sm:mt-10 sm:mb-10 overflow-auto sm:pt-0"
+            "h-full rounded-t-xl sm:rounded-xl overflow-auto sm:overflow-hidden"
           }
         >
-          <div
-            className={
-              "h-full rounded-t-xl sm:rounded-xl overflow-auto sm:overflow-hidden"
-            }
-          >
-            <iframe className={"h-full w-full"} allow="payment" src={url} />
-          </div>
+          <iframe className={"h-full w-full"} allow="payment" src={url} />
         </div>
-      </div>
-      <div
-        style={{ backgroundColor: "#090A0C" }}
-        className={"block sm:hidden flex-grow w-full"}
-      />
-    </div>
-  );
-}
-
-function SideBar() {
-  const displayName = "WindCreek";
-
-  return (
-    <>
-      <HeaderSection displayName={displayName || ""} />
-    </>
-  );
-}
-
-function HeaderSection({ displayName }: { displayName: string }) {
-  return (
-    <div className="flex space-x-2 sm:space-x-0 flex-row sm:flex-col space-y-4 items-start sm:max-w-md px-6 pt-6 lg:pt-20 lg:ml-[12%] relative lg:fixed lg:top-6 left-0">
-      <div className="flex items-center">
-        <LogoImage
-          src={
-            "https://play-lh.googleusercontent.com/raaaYXwGh7qcx3X9KzKgQe2eQ9S37W7Am87PjSDrF7wDgDcAa02HdFn0ZKymFbDLgBc"
-          }
-          alt="coinflow"
-          className="size-4 lg:size-6"
-          containerClassName="size-7 lg:size-10 bg-gray-900 border-action"
-        />
-      </div>
-      <span className="text-xs sm:text-sm lg:text-lg font-semibold text-action">
-        Top up your {displayName} balance
-      </span>
-    </div>
-  );
-}
-
-function LogoImage({
-  src,
-  alt,
-  className,
-  containerClassName,
-  style,
-}: {
-  style?: React.CSSProperties;
-  src: string | undefined;
-  alt: string;
-  className: string;
-  containerClassName: string;
-}) {
-  if (!src) return null;
-
-  return (
-    <div
-      style={style}
-      className={`flex items-center justify-center rounded-full overflow-hidden border-2 ${containerClassName}`}
-    >
-      <img
-        className={`rounded-full object-contain ${className}`}
-        src={src}
-        alt={alt}
-      />
-    </div>
-  );
-}
-
-export function Login() {
-  const { wallet, login } = usePrivyWallet();
-
-  useEffect(() => {
-    if (wallet.publicKey) return;
-    login();
-  }, []);
-
-  return (
-    <div
-      className={"flex justify-center items-center flex-1 relative bg-white"}
-    >
-      <div
-        className={"absolute top-0 bottom-0 w-full animate-pulse bg-gray-100"}
-      />
-      <div
-        className={
-          "relative bg-white flex flex-col items-center space-y-5 p-8 rounded-2xl ring-[0.5px] ring-gray-200"
-        }
-      >
-        <span className={"text-gray-900 font-medium text-sm"}>Loading...</span>
       </div>
     </div>
   );
