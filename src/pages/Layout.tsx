@@ -1,8 +1,10 @@
 import { usePrivyWallet } from "../hooks/usePrivyWallet.tsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CreditPurchase } from "./CreditPurchase.tsx";
+import { ModeSelector } from "../components/ModeSelector.tsx";
 
 export function Layout() {
+  const [mode, setMode] = useState<"topUp" | "redeem">("topUp");
   const { wallet } = usePrivyWallet();
 
   if (!wallet.publicKey) return <Login />;
@@ -20,10 +22,11 @@ export function Layout() {
           "flex-grow sm:h-full fixed top-0 left-0 w-full sm:w-1/4 md:w-1/2"
         }
       >
-        <SideBar />
+        <SideBar mode={mode} setMode={setMode} />
       </div>
       <div className={"hidden sm:block flex-grow h-full"} />
-      <CreditPurchase />
+      {mode === "topUp" && <CreditPurchase />}
+      {mode === "redeem" && <CreditPurchase />}
       <div
         style={{ backgroundColor: "#090A0C" }}
         className={"block sm:hidden flex-grow w-full"}
@@ -32,17 +35,23 @@ export function Layout() {
   );
 }
 
-function SideBar() {
-  const displayName = "WindCreek";
-
-  return (
-    <>
-      <HeaderSection displayName={displayName || ""} />
-    </>
-  );
+function SideBar({
+  mode,
+  setMode,
+}: {
+  mode: "topUp" | "redeem";
+  setMode: (amount: "topUp" | "redeem") => void;
+}) {
+  return <HeaderSection mode={mode} setMode={setMode} />;
 }
 
-function HeaderSection({ displayName }: { displayName: string }) {
+function HeaderSection({
+  mode,
+  setMode,
+}: {
+  mode: "topUp" | "redeem";
+  setMode: (amount: "topUp" | "redeem") => void;
+}) {
   return (
     <div className="flex space-x-2 sm:space-x-0 flex-row sm:flex-col space-y-4 items-start sm:max-w-md px-6 pt-6 lg:pt-20 lg:ml-[12%] relative lg:fixed lg:top-6 left-0">
       <div className="flex items-center">
@@ -55,8 +64,11 @@ function HeaderSection({ displayName }: { displayName: string }) {
           containerClassName="size-7 lg:size-10 bg-gray-900 border-action"
         />
       </div>
+      <ModeSelector mode={mode} setMode={setMode} />
       <span className="text-xs sm:text-sm lg:text-lg font-semibold text-action">
-        Top up your {displayName} balance
+        {mode === "topUp"
+          ? "Top up your Wind Creek balance"
+          : "Spend your Wind Creek balance"}
       </span>
     </div>
   );
