@@ -53,9 +53,11 @@ function HeaderSection({
   mode: "topUp" | "redeem";
   setMode: (amount: "topUp" | "redeem") => void;
 }) {
+  const { logout } = usePrivyWallet();
+
   return (
     <div className="flex space-x-2 sm:space-x-0 flex-row sm:flex-col space-y-4 items-start sm:max-w-md px-6 pt-6 lg:pt-20 lg:ml-[12%] relative lg:fixed lg:top-6 left-0">
-      <div className="flex items-center">
+      <div className="flex flex-row items-center">
         <LogoImage
           src={
             "https://play-lh.googleusercontent.com/raaaYXwGh7qcx3X9KzKgQe2eQ9S37W7Am87PjSDrF7wDgDcAa02HdFn0ZKymFbDLgBc"
@@ -64,6 +66,12 @@ function HeaderSection({
           className="size-4 lg:size-6"
           containerClassName="size-7 lg:size-10 bg-[#a32b29] border-action"
         />
+        <span
+          className={"text-slate-500 underline text-xs pl-2 cursor-pointer"}
+          onClick={logout}
+        >
+          logout
+        </span>
       </div>
       <ModeSelector mode={mode} setMode={setMode} />
       <span className="text-xs sm:text-sm lg:text-lg font-semibold text-action">
